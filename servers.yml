@@ -1,0 +1,16 @@
+---
+- name: controller
+  box: slowe/ubuntu-trusty-x64
+  ram: 1024
+  vcpu: 1
+  mgmt_ip: 192.168.1.101
+- name: network
+  box: slowe/ubuntu-trusty-x64
+  ram: 512
+  vcpu: 1
+  mgmt_ip: 192.168.1.102
+- name: compute
+  box: slowe/ubuntu-trusty-x64
+  ram: 1024
+  vcpu: 1
+  mgmt_ip: 192.168.1.103
