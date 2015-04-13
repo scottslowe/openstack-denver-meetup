@@ -5,6 +5,11 @@
 Vagrant.require_version ">= 1.6.0"
 VAGRANTFILE_API_VERSION = "2"
 
+# Specify default provider (uncomment the provider you want to use)
+#ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'vmware_fusion'
+#ENV['VAGRANT_DEFAULT_PROVIDER'] = 'vmware_workstation'
+
 # Require 'yaml' module
 require 'yaml'
 
@@ -27,15 +32,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       srv.vm.box = servers["box"]
       # Assign an additional static private network
       srv.vm.network "private_network", ip: servers["mgmt_ip"]
-      # Specify default synced folder
-      srv.vm.synced_folder ".", "/vagrant"
+      # Disable default synced folder
+      srv.vm.synced_folder ".", "/vagrant", disabled: true
       # Configure VMs with RAM and CPUs per settings in servers.yml
       # First for Fusion-based VMs
       srv.vm.provider :vmware_fusion do |vmw|
         vmw.vmx["memsize"] = servers["ram"]
-        vmw.vmx["numvcpus"] = servers["vcpu"]
       end # srv.vm.provider vmware_fusion
-      # Now for VirtualBox-based VMs
+      # Next for Workstation-based VMs
+      srv.vm.provider :vmware_workstation do |vmw|
+        vmw.vmx["memsize"] = servers["ram"]
+      end # srv.vm.provider vmware_workstation
+      # Finally for VirtualBox-based VMs
       srv.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--memory", servers["ram"]]
       end # srv.vm.provider virtualbox
