@@ -1,17 +1,29 @@
 ---
 - name: controller
   box: slowe/ubuntu-trusty-x64
-  ram: 1024
-  mgmt_ip: 192.168.100.101
+  ram: 2048
+  mgmt: 10.0.0.11
+  tunnel: 0.0.0.0
+  storage: 0.0.0.0
+  external: 0.0.0.0
 - name: network
   box: slowe/ubuntu-trusty-x64
   ram: 512
-  mgmt_ip: 192.168.100.102
+  mgmt: 10.0.0.21
+  tunnel: 10.0.1.21
+  storage: 0.0.0.0
+  external: 192.168.100.21
 - name: storage
   box: slowe/ubuntu-trusty-x64
   ram: 512
-  mgmt_ip: 192.168.100.103
+  mgmt: 10.0.0.41
+  tunnel: 0.0.0.0
+  storage: 10.0.2.41
+  external: 0.0.0.0
 - name: compute-01
   box: slowe/ubuntu-trusty-x64
-  ram: 1024
-  mgmt_ip: 192.168.100.104
+  ram: 2048
+  mgmt: 10.0.0.31
+  tunnel: 10.0.1.31
+  storage: 10.0.2.31
+  external: 0.0.0.0

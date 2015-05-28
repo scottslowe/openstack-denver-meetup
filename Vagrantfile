@@ -28,12 +28,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define servers["name"] do |srv|
       # Don't check for box updates
       srv.vm.box_check_update = false
+
+      # Set VM hostname
       srv.vm.hostname = servers["name"]
+
+      # Set box to be used by this VM
       srv.vm.box = servers["box"]
-      # Assign an additional static private network
-      srv.vm.network "private_network", ip: servers["mgmt_ip"]
+
+      # Configure VM networking
+      # Assign an additional static private network for management
+      srv.vm.network "private_network", ip: servers["mgmt"]
+      # Add additional interfaces if IP addresses are provided in servers.yml
+      if servers["tunnel"] != "0.0.0.0"
+        srv.vm.network "private_network", ip: servers["tunnel"]
+      end # test for tunnel interface
+      if servers["storage"] != "0.0.0.0"
+        srv.vm.network "private_network", ip: servers["storage"]
+      end # test for storage interface
+      if servers["external"] != "0.0.0.0"
+        srv.vm.network "private_network", ip: servers["external"]
+      end # test for external interface
+
       # Disable default synced folder
       srv.vm.synced_folder ".", "/vagrant", disabled: true
+
       # Configure VMs with RAM and CPUs per settings in servers.yml
       # First for Fusion-based VMs
       srv.vm.provider :vmware_fusion do |vmw|
