@@ -10,6 +10,12 @@ VAGRANTFILE_API_VERSION = "2"
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'vmware_fusion'
 #ENV['VAGRANT_DEFAULT_PROVIDER'] = 'vmware_workstation'
 
+# Specify clone directory for VMware provider (to enable exclusion
+# from Time Machine backups)
+# Comment this out if not using the VMware provider
+# Set the desired location if using the VMware provider
+ENV['VAGRANT_VMWARE_CLONE_DIRECTORY'] = '~/.vagrant'
+
 # Require 'yaml' module
 require 'yaml'
 
