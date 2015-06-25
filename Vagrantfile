@@ -71,6 +71,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       srv.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--memory", servers["ram"]]
       end # srv.vm.provider virtualbox
+
+      # If this is the compute node and you are using the VMware provider,
+      # enable nested virtualization
+      if servers["name"] == "compute-01"
+        srv.vm.provider :vmware_fusion do |vmw|
+          vmw.vmx["vhv.enable"] = "TRUE"
+        end # srv.vm.provider vmware_fusion
+        srv.vm.provider :vmware_workstation do |vmw|
+          vmw.vmx["vhv.enable"] = "TRUE"
+        end # srv.vm.provider vmware_workstation
+      end # test for compute node
     end # config.vm.define
   end # servers.each
 end # vagrant.configure
