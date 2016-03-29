@@ -6,46 +6,38 @@
 # OS_TENANT_NAME = Specifies the name of the tenant Docker Machine will use
 
 # Define some values used later
-OS_IMAGE_ID="some value here"
-OS_NETWORK_NAME="some value here"
+OS_IMAGE_ID="be12ea81-d586-414f-be1d-3004796a5fc1"
+OS_NETWORK_NAME="test-05"
 OS_SSH_USER="ubuntu"
-OS_FLOATINGIP_POOL="some value here"
+OS_FLOATINGIP_POOL="ext-net-5"
 SWARM_TOKEN="some value"
 
 # Create the VM and Swarm master
 docker-machine create -d openstack \
---openstack-flavor-id 5 \
+--openstack-flavor-id 3 \
 --openstack-image-id $OS_IMAGE_ID \
 --openstack-net-name $OS_NETWORK_NAME \
 --openstack-floatingip-pool $OS_FLOATINGIP_POOL \
 --openstack-ssh-user $OS_SSH_USER \
 --openstack-sec-groups docker,basic-services \
---swarm \
---swarm-master \
---swarm-discovery token://$SWARM_TOKEN
 master
 
 # Create first Swarm node
 docker-machine create -d openstack \
---openstack-flavor-id 5 \
+--openstack-flavor-id 3 \
 --openstack-image-id $OS_IMAGE_ID \
 --openstack-net-name $OS_NETWORK_NAME \
 --openstack-floatingip-pool $OS_FLOATINGIP_POOL \
 --openstack-ssh-user $OS_SSH_USER \
 --openstack-sec-groups docker,basic-services \
---swarm \
---swarm-discovery token://$SWARM_TOKEN
 node-01
 
 # Create second Swarm node
 docker-machine create -d openstack \
---openstack-flavor-id 5 \
+--openstack-flavor-id 3 \
 --openstack-image-id $OS_IMAGE_ID \
 --openstack-net-name $OS_NETWORK_NAME \
 --openstack-floatingip-pool $OS_FLOATINGIP_POOL \
 --openstack-ssh-user $OS_SSH_USER \
 --openstack-sec-groups docker,basic-services \
---swarm \
---swarm-discovery token://$SWARM_TOKEN
 node-02
-

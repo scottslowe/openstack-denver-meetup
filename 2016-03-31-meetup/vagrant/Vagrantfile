@@ -5,9 +5,6 @@
 require 'vagrant-openstack-provider'
 require 'yaml'
 
-# Read YAML file with OpenStack credentials
-creds = YAML.load_file(File.join(File.dirname(__FILE__), 'credentials.yml'))
-
 # Read YAML file with instance information
 instances = YAML.load_file(File.join(File.dirname(__FILE__), 'instances.yml'))
 
@@ -15,10 +12,6 @@ instances = YAML.load_file(File.join(File.dirname(__FILE__), 'instances.yml'))
 Vagrant.require_version '>= 1.6.0'
 VAGRANTFILE_API_VERSION = '2'
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'openstack'
-
-# Specify OpenStack authentication URL
-# Edit the following line with your correct information
-ENV['OS_AUTH_URL'] = 'http://controller:5000/v2.0'
 
 # Create and configure the OpenStack instance(s)
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -28,22 +21,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Specify path to SSH private key
   # Edit the following line with your correct information
-  config.ssh.private_key_path = '~/.ssh/keypair.pem'
+  config.ssh.private_key_path = '~/.ssh/homelab.pem'
 
   # Configure the base information for the OpenStack provider
   config.vm.provider 'openstack' do |os|
     os.openstack_auth_url = ENV['OS_AUTH_URL']
-    os.username = creds['username']
-    os.password = creds['password']
-    os.tenant_name = creds['tenant']
-    os.server_name = 'default'
+    os.username = ENV['OS_USERNAME']
+    os.password = ENV['OS_PASSWORD']
+    os.tenant_name = ENV['OS_TENANT_NAME']
+    os.server_name = 'demo'
     os.flavor = 'm1.small'
-    os.image = 'default'
-    os.floating_ip_pool = 'default'
-    os.networks = 'default'
-    os.keypair_name = 'default'
+    os.image = 'Ubuntu 14.04.3 LTS x64'
+    os.floating_ip_pool = 'ext-net-1'
+    os.networks = 'test-01'
+    os.keypair_name = 'homelab'
     # Edit the following line with your correct information
-    os.security_groups = ['default']
+    os.security_groups = ['basic-services']
     os.sync_method = 'none'
   end # config.vm.provider 'openstack'
 
