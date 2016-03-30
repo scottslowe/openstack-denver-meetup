@@ -8,7 +8,7 @@ resource "openstack_networking_subnet_v2" "tf-subnet" {
 	network_id = "${openstack_networking_network_v2.tf-net.id}"
 	cidr = "192.168.200.0/24"
 	ip_version = 4
-	dns_nameservers = ["8.8.8.8","8.8.4.4"]
+	dns_nameservers = ["172.16.1.11","172.16.1.6"]
 }
 
 resource "openstack_networking_router_v2" "tf-router" {
@@ -32,7 +32,7 @@ resource "openstack_compute_instance_v2" "tf-instance" {
 	image_name = "${var.image}"
 	flavor_name = "${var.flavor}"
 	key_pair = "${var.key_pair}"
-	security_groups = ["default"]
+	security_groups = ["default","basic-services"]
 	floating_ip = "${openstack_networking_floatingip_v2.tf-fip.address}"
 	network {
 		uuid = "${openstack_networking_network_v2.tf-net.id}"

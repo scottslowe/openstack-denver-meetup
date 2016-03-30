@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Specify path to SSH private key
   # Edit the following line with your correct information
-  config.ssh.private_key_path = '~/.ssh/homelab.pem'
+  config.ssh.private_key_path = '~/.ssh/lab_rsa'
 
   # Configure the base information for the OpenStack provider
   config.vm.provider 'openstack' do |os|
@@ -34,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     os.image = 'Ubuntu 14.04.3 LTS x64'
     os.floating_ip_pool = 'ext-net-1'
     os.networks = 'test-01'
-    os.keypair_name = 'homelab'
+    os.keypair_name = 'lab'
     # Edit the following line with your correct information
     os.security_groups = ['basic-services']
     os.sync_method = 'none'

@@ -1,5 +1,5 @@
 variable "image" {
-	default = "<INSERT YOUR VALUE HERE>"
+	default = "Cirros 0.3.4"
 }
 
 variable "flavor" {
@@ -7,13 +7,13 @@ variable "flavor" {
 }
 
 variable "external_gateway" {
-	default = "<INSERT YOUR VALUE HERE>"
+	default = "c924f32c-a583-4b6a-af23-62746790a205"
 }
 
 variable "key_pair" {
-	default = "<INSERT YOUR VALUE HERE>"
+	default = "lab"
 }
 
 variable "pool" {
-	default = "<INSERT YOUR VALUE HERE>"
+	default = "ext-net-5"
 }
